@@ -1,0 +1,9 @@
+{
+  "name": "Nuestra Aventura – Birthday Trip 2026",
+  "short_name": "Nuestra Aventura",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f8f6f1",
+  "theme_color": "#374234",
+  "lang": "es"
+}
