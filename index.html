@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#374234">
+<link rel="manifest" href="manifest.json">
+<title>Nuestra Aventura</title>
+<style>
+:root{--bg:#f8f6f1;--green:#374234;--sage:#e0e7dc;--cream:#e8dcc2;--ink:#30362c;--muted:#6b6d63;--card:#fff;--line:#e2ddd3}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;padding-bottom:92px}
+header{margin:16px;padding:28px 24px 24px;border-radius:28px;background:var(--sage);position:relative;overflow:hidden;min-height:270px}
+header:after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;right:-45px;top:-55px;background:var(--cream)}
+.star{font-size:38px;position:relative;z-index:1} h1{font-size:42px;line-height:.95;margin:34px 0 12px;letter-spacing:-1.5px;position:relative;z-index:1} .sub{font-size:17px;color:#5d6055;position:relative;z-index:1}.dates{display:inline-block;background:#53604b;color:#fff;padding:11px 17px;border-radius:22px;font-weight:700;font-size:14px;margin-top:20px;position:relative;z-index:1}
+main{padding:0 16px}.intro{font-size:22px;font-weight:750;margin:24px 6px 18px}.card{background:var(--card);border:1px solid var(--line);border-radius:25px;padding:22px;margin-bottom:18px;box-shadow:0 4px 16px #00000008}.eyebrow{font-size:12px;font-weight:800;color:#737666;letter-spacing:1px}.next h2{font-size:24px;margin:10px 0}.meta{color:var(--muted);margin:7px 0;font-size:15px}.btn{border:0;border-radius:18px;background:var(--green);color:#fff;padding:13px 18px;font-weight:700;font-size:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.tile{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px 12px;min-height:110px;text-align:left;font-weight:750;font-size:15px}.tile span{display:block;font-size:30px;margin-bottom:10px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#374234;color:#fff;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 8px calc(10px + env(safe-area-inset-bottom));z-index:10}.nav{background:none;border:0;color:#fff;font-size:12px;font-weight:700}.nav b{display:block;font-size:25px;margin-bottom:3px}
+section.view{display:none}.back{margin:4px 0 18px;background:none;border:0;font-weight:800;color:var(--green);font-size:15px}
+.row{display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding:15px 0}.row:last-child{border-bottom:0}.row strong{display:block}.small{font-size:13px;color:var(--muted);margin-top:4px}.danger{color:#a34c42}.addform input,.addform textarea{width:100%;border:1px solid var(--line);border-radius:14px;padding:13px;margin:7px 0 10px;font:inherit}.addform textarea{min-height:90px}.empty{color:var(--muted);text-align:center;padding:20px}
+</style>
+</head>
+<body>
+<div id="home" class="view" style="display:block">
+<header><div class="star">✦</div><h1>NUESTRA<br>AVENTURA</h1><div class="sub">Birthday Trip 2026</div><div class="dates">OCT 2 — OCT 11</div></header>
+<main>
+<div class="intro">10 días · 1 familia · muchos recuerdos.</div>
+<div class="card next"><div class="eyebrow">PRÓXIMA PARADA</div><h2>🎢 Tweetsie Railroad</h2><div class="meta">Octubre 3 · 3:00 PM</div><div class="meta">📍 Blowing Rock, NC</div><button class="btn" onclick="show('itinerary')">VER ITINERARIO →</button></div>
+<div class="intro">¿Qué hacemos hoy?</div>
+<div class="grid">
+<button class="tile" onclick="show('itinerary')"><span>🗓️</span>Itinerario</button>
+<button class="tile" onclick="show('places')"><span>📍</span>Lugares</button>
+<button class="tile" onclick="show('tickets')"><span>🎟️</span>Tickets & Reservas</button>
+<button class="tile" onclick="show('food')"><span>🍽️</span>Dónde Comer</button>
+<button class="tile" onclick="show('expenses')"><span>💰</span>Gastos</button>
+<button class="tile" onclick="show('memories')"><span>📸</span>Recuerdos</button>
+<button class="tile" onclick="show('games')"><span>🎲</span>Juegos & Retos</button>
+<button class="tile" onclick="show('family')"><span>❤️</span>Familia</button>
+</div></main></div>
+
+<div id="itinerary" class="view"><main><button class="back" onclick="show('home')">← Inicio</button><h2>🗓️ Nuestro Itinerario</h2><div id="days"></div><button class="btn" onclick="addDay()">＋ Añadir día</button></main></div>
+<div id="places" class="view"><main><button class="back" onclick="show('home')">← Inicio</button><h2>📍 Lugares</h2><div id="placesList"></div><button class="btn" onclick="addItem('places')">＋ Añadir lugar</button></main></div>
+<div id="tickets" class="view"><main><button class="back" onclick="show('home')">← Inicio</button><h2>🎟️ Tickets & Reservas</h2><div id="ticketsList"></div><button class="btn" onclick="addItem('tickets')">＋ Añadir reserva</button></main></div>
+<div id="food" class="view"><main><button class="back" onclick="show('home')">← Inicio</button><h2>🍽️ Dónde Comer</h2><div id="foodList"></div><button class="btn" onclick="addItem('food')">＋ Añadir restaurante</button></main></div>
+<div id="expenses" class="view"><main><button class="back" onclick="show('home')">← Inicio</button><h2>💰 Gastos</h2><div class="card"><div class="eyebrow">TOTAL</div><h1 id="total">$0.00</h1><div id="expenseList"></div></div><button class="btn" onclick="addExpense()">＋ Añadir gasto</button></main></div>
+<div id="memories" class="view"><main><button class="back" onclick="show('home')">← Inicio</button><h2>📸 Recuerdos</h2><div class="card"><p>Esta sección queda preparada para añadir fotos y notas del viaje.</p><button class="btn" onclick="addMemory()">＋ Añadir recuerdo</button></div><div id="memoryList"></div></main></div>
+<div id="games" class="view"><main><button class="back" onclick="show('home')">← Inicio</button><h2>🎲 Juegos & Retos</h2><div id="gameList"></div></main></div>
+<div id="family" class="view"><main><button class="back" onclick="show('home')">← Inicio</button><h2>❤️ Familia</h2><div class="card"><p>Adultos del viaje</p><div id="familyList"></div><button class="btn" onclick="addFamily()">＋ Añadir familiar</button></div></main></div>
+
+<nav class="bottom">
+<button class="nav" onclick="show('home')"><b>⌂</b>Inicio</button>
+<button class="nav" onclick="addQuick()"><b>＋</b>Añadir</button>
+<button class="nav" onclick="show('memories')"><b>♡</b>Recuerdos</button>
+<button class="nav" onclick="show('games')"><b>☰</b>Más</button>
+</nav>
+
+<script>
+const key='nuestra-aventura-v1';
+let data=JSON.parse(localStorage.getItem(key)||'null')||{
+days:[
+ {date:'Oct 2',title:'Llegada',items:'Viaje y check-in'},
+ {date:'Oct 3',title:'Tweetsie Railroad',items:'Llegar 3:00 PM · disfrutar el parque'},
+ {date:'Oct 4',title:'Día familiar',items:'Añade aquí tus actividades'}
+],places:[],tickets:[],food:[],expenses:[],memories:[],family:[],
+games:[
+ {text:'📸 Foto familiar en cada destino',done:false},
+ {text:'😂 La foto más graciosa del viaje',done:false},
+ {text:'🍔 Probar algo nuevo',done:false},
+ {text:'🌅 Foto del mejor paisaje',done:false},
+ {text:'🎢 Atracción que dé más miedo',done:false},
+ {text:'🏆 Elegir el momento favorito del día',done:false}
+]};
+function save(){localStorage.setItem(key,JSON.stringify(data))}
+function show(id){document.querySelectorAll('.view').forEach(x=>x.style.display='none');document.getElementById(id).style.display='block';render()}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function render(){
+days.innerHTML=data.days.map((d,i)=>`<div class="card"><div class="eyebrow">${esc(d.date)}</div><h2>${esc(d.title)}</h2><div class="meta">${esc(d.items)}</div><button class="btn" onclick="del('days',${i})">Eliminar</button></div>`).join('');
+['places','tickets','food'].forEach(k=>{document.getElementById(k+'List').innerHTML=data[k].length?data[k].map((x,i)=>`<div class="card row"><div><strong>${esc(x.name)}</strong><div class="small">${esc(x.note||'')}</div></div><button class="btn danger" onclick="del('${k}',${i})">×</button></div>`).join(''):'<div class="empty">Todavía no hay nada aquí.</div>'});
+let total=data.expenses.reduce((a,x)=>a+Number(x.amount||0),0);document.getElementById('total').textContent='$'+total.toFixed(2);
+expenseList.innerHTML=data.expenses.map((x,i)=>`<div class="row"><div><strong>${esc(x.name)}</strong><div class="small">$${Number(x.amount).toFixed(2)}</div></div><button class="btn danger" onclick="del('expenses',${i})">×</button></div>`).join('');
+memoryList.innerHTML=data.memories.map((x,i)=>`<div class="card"><strong>📸 ${esc(x.title)}</strong><p>${esc(x.note)}</p><button class="btn danger" onclick="del('memories',${i})">Eliminar</button></div>`).join('');
+gameList.innerHTML=data.games.map((x,i)=>`<div class="card row"><div><strong>${esc(x.text)}</strong></div><button class="btn" onclick="toggleGame(${i})">${x.done?'✓ Listo':'Completar'}</button></div>`).join('');
+familyList.innerHTML=data.family.map((x,i)=>`<div class="row"><strong>${esc(x)}</strong><button class="btn danger" onclick="del('family',${i})">×</button></div>`).join('');
+}
+function addDay(){let date=prompt('Fecha (ej. Oct 5):');if(!date)return;let title=prompt('Nombre del día:');if(!title)return;let items=prompt('Actividades:')||'';data.days.push({date,title,items});save();render()}
+function addItem(k){let name=prompt('Nombre:');if(!name)return;let note=prompt('Nota, hora, dirección o detalle:')||'';data[k].push({name,note});save();render()}
+function addExpense(){let name=prompt('¿En qué gastaron?');if(!name)return;let amount=prompt('Cantidad:');if(amount===null||isNaN(amount))return;data.expenses.push({name,amount:Number(amount)});save();render()}
+function addMemory(){let title=prompt('Título del recuerdo:');if(!title)return;let note=prompt('Nota:')||'';data.memories.push({title,note});save();render()}
+function addFamily(){let n=prompt('Nombre del familiar:');if(n){data.family.push(n);save();render()}}
+function toggleGame(i){data.games[i].done=!data.games[i].done;save();render()}
+function del(k,i){data[k].splice(i,1);save();render()}
+function addQuick(){let x=prompt('¿Qué quieres añadir? Escribe: día, lugar, reserva, comida, gasto, recuerdo o familiar');if(!x)return;let k=x.toLowerCase();if(k.includes('día'))addDay();else if(k.includes('lugar'))addItem('places');else if(k.includes('reserva'))addItem('tickets');else if(k.includes('comida'))addItem('food');else if(k.includes('gasto'))addExpense();else if(k.includes('recuerdo'))addMemory();else if(k.includes('familiar'))addFamily();else alert('Puedes usar el botón + dentro de cada sección.')}
+render();
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+</script>
+</body></html>
